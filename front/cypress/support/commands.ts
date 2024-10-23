@@ -41,3 +41,37 @@
 //
 // -- This will overwrite an existing command --
 // Cypress.Commands.overwrite("visit", (originalFn, url, options) => { ... })
+Cypress.Commands.add('loginadmin', () => {
+  cy.intercept('POST', '/api/auth/login', {
+    statusCode: 200,
+    body: {
+      jwt: 'valid-jwt-token',
+      id: 1,
+      username: 'admin@example.com',
+      firstName: 'Admin',
+      lastName: 'User',
+      admin: true,
+    },
+  }).as('loginRequest');
+  cy.visit('/login').then(() => {
+    const sessionInfo = {
+      token: 'valid-jwt-token',
+      type: 'Bearer',
+      id: 1,
+      username: 'admin@example.com',
+      firstName: 'Admin',
+      lastName: 'User',
+      admin: true,
+    };
+    // Enregistrer les informations de session dans le localStorage
+    window.localStorage.setItem(
+      'sessionInformation',
+      JSON.stringify(sessionInfo)
+    );
+    window.localStorage.setItem('isLogged', 'true');
+  });
+  cy.get('input[formControlName=email]').type('admin@example.com');
+  cy.get('input[formControlName=password]').type('password123');
+  cy.get('button[type=submit]').click();
+  cy.wait('@loginRequest');
+});
