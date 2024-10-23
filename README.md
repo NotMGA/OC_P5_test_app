@@ -166,7 +166,7 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés :
 
    Les rapports seront générés dans le dossier suivant : `target/site/jacoco/index.html`.
    
-![image](https://github.com/user-attachments/assets/d5beeee8-9ff7-42d3-a33a-281ea406b624
+![image](https://github.com/user-attachments/assets/d5beeee8-9ff7-42d3-a33a-281ea406b624)
 
 Le taux de couverture actuel du code back end est de 66%. Cette couverture est impactée par l'utilisation de Lombok, qui génère automatiquement des fonctions  qui ne sont pas explicitement utilisées dans le projet, ce qui diminue artificiellement le taux de couverture.
 
