@@ -130,6 +130,10 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés :
    ```bash
    npm run test
    ```
+   Pour voir le coverage :
+   ```bash
+   npm test -- --coverage
+   ```
 
    ![image](https://github.com/user-attachments/assets/1970c423-93d0-483d-823c-379dfb1fd350)
 
@@ -167,7 +171,6 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés :
 
    Les rapports seront générés dans le dossier suivant : `target/site/jacoco/index.html`.
    
-![image](https://github.com/user-attachments/assets/d5beeee8-9ff7-42d3-a33a-281ea406b624)
+![image](https://github.com/user-attachments/assets/3dee3e2b-e915-4c0e-8610-bb8e10ef6443)
 
-Le taux de couverture actuel du code back end est de 66%. Cette couverture est impactée par l'utilisation de Lombok, qui génère automatiquement des fonctions  qui ne sont pas explicitement utilisées dans le projet, ce qui diminue artificiellement le taux de couverture.
 
