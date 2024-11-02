@@ -131,7 +131,8 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés :
    npm run test
    ```
 
-   ![image](https://github.com/user-attachments/assets/cc01cd07-103b-44ba-ba4a-385fbfec8254)
+   ![image](https://github.com/user-attachments/assets/1970c423-93d0-483d-823c-379dfb1fd350)
+
 
 
 ### E2E
