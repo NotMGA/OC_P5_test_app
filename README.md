@@ -171,6 +171,7 @@ Avant de commencer, assurez-vous d'avoir les éléments suivants installés :
 
    Les rapports seront générés dans le dossier suivant : `target/site/jacoco/index.html`.
    
-![image](https://github.com/user-attachments/assets/3dee3e2b-e915-4c0e-8610-bb8e10ef6443)
+![image](https://github.com/user-attachments/assets/3c490b15-1ded-4bd8-be0d-4a9d16ba2cad)
+
 
 
