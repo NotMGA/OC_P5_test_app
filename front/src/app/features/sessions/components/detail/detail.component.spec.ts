@@ -75,7 +75,7 @@ describe('DetailComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule.withRoutes([]), // Utilisation de RouterTestingModule avec des routes fictives
+        RouterTestingModule.withRoutes([]),
         HttpClientModule,
         MatCardModule,
         MatIconModule,
@@ -93,7 +93,7 @@ describe('DetailComponent', () => {
         { provide: TeacherService, useValue: mockTeacherService },
         { provide: Router, useValue: mockRouter },
         { provide: MatSnackBar, useValue: mockSnackBar },
-        { provide: ActivatedRoute, useValue: mockActivatedRoute }, // Injection du mock pour ActivatedRoute
+        { provide: ActivatedRoute, useValue: mockActivatedRoute },
       ],
     }).compileComponents();
 
@@ -109,8 +109,8 @@ describe('DetailComponent', () => {
   it('should fetch session details on init', () => {
     component.ngOnInit();
 
-    expect(mockSessionApiService.detail).toHaveBeenCalledWith('1'); // Vérifie que l'id de session est bien passée
-    expect(mockTeacherService.detail).toHaveBeenCalledWith('1'); // Vérifie que l'id de l'enseignant est bien passée
+    expect(mockSessionApiService.detail).toHaveBeenCalledWith('1');
+    expect(mockTeacherService.detail).toHaveBeenCalledWith('1');
     expect(component.session?.name).toBe('Test Session');
     expect(component.teacher?.firstName).toBe('John');
   });
@@ -118,7 +118,7 @@ describe('DetailComponent', () => {
   it('should delete session and navigate to sessions list', () => {
     component.delete();
 
-    expect(mockSessionApiService.delete).toHaveBeenCalledWith('1'); // Vérifie que la suppression est appelée avec l'id de session
+    expect(mockSessionApiService.delete).toHaveBeenCalledWith('1');
     expect(mockSnackBar.open).toHaveBeenCalledWith(
       'Session deleted !',
       'Close',
@@ -127,17 +127,17 @@ describe('DetailComponent', () => {
     expect(mockRouter.navigate).toHaveBeenCalledWith(['sessions']);
   });
   it('should allow user to participate in a session', () => {
-    component.isParticipate = false; // Simule que l'utilisateur n'est pas encore inscrit
-    component.participate(); // Appel de la méthode participate
+    component.isParticipate = false;
+    component.participate();
 
-    expect(mockSessionApiService.participate).toHaveBeenCalledWith('1', '1'); // Vérifie que la méthode participe est appelée avec les bons arguments
-    expect(mockSessionApiService.detail).toHaveBeenCalled(); // Vérifie que les détails de la session sont à nouveau récupérés après la participation
+    expect(mockSessionApiService.participate).toHaveBeenCalledWith('1', '1');
+    expect(mockSessionApiService.detail).toHaveBeenCalled();
   });
   it('should allow user to unParticipate from a session', () => {
-    component.isParticipate = true; // Simule que l'utilisateur est déjà inscrit
-    component.unParticipate(); // Appel de la méthode unParticipate
+    component.isParticipate = true;
+    component.unParticipate();
 
-    expect(mockSessionApiService.unParticipate).toHaveBeenCalledWith('1', '1'); // Vérifie que la méthode unParticipate est appelée avec les bons arguments
-    expect(mockSessionApiService.detail).toHaveBeenCalled(); // Vérifie que les détails de la session sont à nouveau récupérés après l'annulation de la participation
+    expect(mockSessionApiService.unParticipate).toHaveBeenCalledWith('1', '1');
+    expect(mockSessionApiService.detail).toHaveBeenCalled();
   });
 });

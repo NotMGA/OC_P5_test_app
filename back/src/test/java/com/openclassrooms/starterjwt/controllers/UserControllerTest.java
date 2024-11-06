@@ -1,4 +1,5 @@
-import com.openclassrooms.starterjwt.controllers.UserController;
+package com.openclassrooms.starterjwt.controllers;
+
 import com.openclassrooms.starterjwt.dto.UserDto;
 import com.openclassrooms.starterjwt.mapper.UserMapper;
 import com.openclassrooms.starterjwt.models.User;
@@ -38,7 +39,7 @@ public class UserControllerTest {
 
     @BeforeEach
     void setUp() {
-        // Initialisation d'un utilisateur avec un mot de passe fictif
+        // Arrange: Initialisation des objets User et UserDto pour les tests
         user = User.builder()
                 .id(1L)
                 .email("test@example.com")
@@ -48,82 +49,87 @@ public class UserControllerTest {
                 .admin(false)
                 .build();
 
-        userDto = new UserDto(1L, "test@example.com", "Doe", "John", false, "password123", LocalDateTime.now(),
-                LocalDateTime.now());
+        userDto = new UserDto(1L, "test@example.com", "Doe", "John", false, "password123",
+                LocalDateTime.now(), LocalDateTime.now());
     }
 
     @Test
     public void testFindById_Success() {
-        // Arrange
+        // Arrange: Configuration des mocks pour retourner l'utilisateur et son DTO
         when(userService.findById(1L)).thenReturn(user);
         when(userMapper.toDto(user)).thenReturn(userDto);
 
-        // Act
+        // Act: Appel de la méthode findById
         ResponseEntity<?> response = userController.findById("1");
 
-        // Assert
+        // Assert: Vérifier que la réponse est correcte
         assertEquals(200, response.getStatusCodeValue());
         assertEquals(userDto, response.getBody());
     }
 
     @Test
     public void testFindById_NotFound() {
-        // Arrange
-        when(userService.findById(anyLong())).thenReturn(null); // Mock correct utilisé
+        // Arrange: Configuration pour retourner null quand l'utilisateur n'est pas
+        // trouvé
+        when(userService.findById(anyLong())).thenReturn(null);
 
-        // Act
+        // Act: Appel de la méthode findById avec un ID inexistant
         ResponseEntity<?> response = userController.findById("1");
 
-        // Assert
+        // Assert: Vérifier que la réponse est Not Found (404)
         assertEquals(404, response.getStatusCodeValue());
     }
 
     @Test
     public void testDeleteUser_Success() {
-        // Arrange
+        // Arrange: Simuler un utilisateur trouvé par l'ID
         when(userService.findById(1L)).thenReturn(user);
 
+        // Mock du UserDetails pour simuler un utilisateur authentifié
         UserDetails userDetails = mock(UserDetails.class);
         when(userDetails.getUsername()).thenReturn("test@example.com");
 
+        // Créer un Authentication et l'ajouter au contexte de sécurité
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
                 userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Act
+        // Act: Appel de la méthode delete
         ResponseEntity<?> response = userController.save("1");
 
-        // Assert
+        // Assert: Vérifier que la suppression a réussi
         assertEquals(200, response.getStatusCodeValue());
         verify(userService, times(1)).delete(1L);
     }
 
     @Test
     public void testDeleteUser_Unauthorized() {
-        // Arrange
+        // Arrange: Simuler un utilisateur trouvé par l'ID
         when(userService.findById(1L)).thenReturn(user);
 
+        // Mock du UserDetails pour simuler un utilisateur qui n'est pas autorisé
         UserDetails userDetails = mock(UserDetails.class);
         when(userDetails.getUsername()).thenReturn("other@example.com");
 
+        // Créer un Authentication et l'ajouter au contexte de sécurité
         Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null,
                 userDetails.getAuthorities());
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        // Act
+        // Act: Appel de la méthode delete avec un utilisateur non autorisé
         ResponseEntity<?> response = userController.save("1");
 
-        // Assert
+        // Assert: Vérifier que la réponse est Unauthorized (401)
         assertEquals(401, response.getStatusCodeValue());
         verify(userService, never()).delete(anyLong());
     }
 
     @Test
     public void testFindById_InvalidIdFormat() {
-        // Act
+        // Act: Appel de la méthode findById avec un format d'ID invalide
         ResponseEntity<?> response = userController.findById("abc");
 
-        // Assert
+        // Assert: Vérifier que la réponse est Bad Request (400)
         assertEquals(400, response.getStatusCodeValue());
     }
 }

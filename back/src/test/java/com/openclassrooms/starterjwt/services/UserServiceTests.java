@@ -1,3 +1,5 @@
+package com.openclassrooms.starterjwt.services;
+
 import com.openclassrooms.starterjwt.models.User;
 import com.openclassrooms.starterjwt.repository.UserRepository;
 import com.openclassrooms.starterjwt.services.UserService;
@@ -38,26 +40,29 @@ class UserServiceTest {
 
     @Test
     void testDeleteUser() {
+        // Arrange
         Long userId = 1L;
 
-        // Appel de la méthode delete
+        // Act Appel de la méthode delete
         userService.delete(userId);
 
-        // Vérifie que la méthode deleteById est bien appelée avec le bon argument
+        // Assert Vérifie que la méthode deleteById est bien appelée avec le bon
+        // argument
         verify(userRepository, times(1)).deleteById(userId);
     }
 
     @Test
     void testFindById_UserExists() {
+        // Arrange
         Long userId = 1L;
 
         // Mock pour simuler qu'un utilisateur est trouvé
         when(userRepository.findById(userId)).thenReturn(Optional.of(user));
 
-        // Appel de la méthode findById
+        // ACT Appel de la méthode findById
         User foundUser = userService.findById(userId);
 
-        // Vérifie que l'utilisateur trouvé est bien celui attendu
+        // Assert Vérifie que l'utilisateur trouvé est bien celui attendu
         assertNotNull(foundUser);
         assertEquals(userId, foundUser.getId());
         assertEquals("test@example.com", foundUser.getEmail());
@@ -68,15 +73,16 @@ class UserServiceTest {
 
     @Test
     void testFindById_UserNotFound() {
+        // Arragne
         Long userId = 1L;
 
         // Mock pour simuler qu'aucun utilisateur n'est trouvé
         when(userRepository.findById(userId)).thenReturn(Optional.empty());
 
-        // Appel de la méthode findById
+        // Act Appel de la méthode findById
         User foundUser = userService.findById(userId);
 
-        // Vérifie que la méthode renvoie null si l'utilisateur n'existe pas
+        // Assert Vérifie que la méthode renvoie null si l'utilisateur n'existe pas
         assertNull(foundUser);
 
         // Vérifie que la méthode findById est bien appelée avec le bon argument

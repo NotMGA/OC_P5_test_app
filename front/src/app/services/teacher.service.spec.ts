@@ -13,7 +13,7 @@ describe('TeacherService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule], // Utilisation de HttpClientTestingModule pour simuler les requêtes HTTP
+      imports: [HttpClientTestingModule],
       providers: [TeacherService],
     });
     service = TestBed.inject(TeacherService);
@@ -21,7 +21,7 @@ describe('TeacherService', () => {
   });
 
   afterEach(() => {
-    httpMock.verify(); // Vérifie qu'aucune requête non traitée ne reste
+    httpMock.verify();
   });
 
   it('should be created', () => {
@@ -53,7 +53,7 @@ describe('TeacherService', () => {
 
     const req = httpMock.expectOne('api/teacher');
     expect(req.request.method).toBe('GET');
-    req.flush(mockTeachers); // Simule la réponse de l'API avec les enseignants mockés
+    req.flush(mockTeachers);
   });
 
   it('should retrieve a teacher by id', () => {
@@ -71,6 +71,6 @@ describe('TeacherService', () => {
 
     const req = httpMock.expectOne('api/teacher/1');
     expect(req.request.method).toBe('GET');
-    req.flush(mockTeacher); // Simule la réponse de l'API avec un enseignant mocké
+    req.flush(mockTeacher);
   });
 });

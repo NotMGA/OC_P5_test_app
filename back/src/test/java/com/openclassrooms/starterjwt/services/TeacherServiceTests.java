@@ -41,13 +41,13 @@ class TeacherServiceTest {
     void testFindAllTeachers() {
         Teacher teacher2 = new Teacher().setId(2L).setFirstName("Jane").setLastName("Smith");
 
-        // Simulation du comportement de findAll
+        // Arrange Simulation du comportement de findAll
         when(teacherRepository.findAll()).thenReturn(Arrays.asList(teacher, teacher2));
 
-        // Appel de la méthode findAll
+        // Act Appel de la méthode findAll
         List<Teacher> teachers = teacherService.findAll();
 
-        // Vérifie que deux enseignants ont été trouvés
+        // Assert Vérifie que deux enseignants ont été trouvés
         assertEquals(2, teachers.size());
         assertTrue(teachers.contains(teacher));
         assertTrue(teachers.contains(teacher2));
@@ -60,13 +60,13 @@ class TeacherServiceTest {
     void testFindById_TeacherExists() {
         Long teacherId = 1L;
 
-        // Simulation de la récupération d'un enseignant existant
+        // Arrange Simulation de la récupération d'un enseignant existant
         when(teacherRepository.findById(teacherId)).thenReturn(Optional.of(teacher));
 
-        // Appel de la méthode findById
+        // Act Appel de la méthode findById
         Teacher foundTeacher = teacherService.findById(teacherId);
 
-        // Vérification que l'enseignant est bien celui attendu
+        // Assert Vérification que l'enseignant est bien celui attendu
         assertNotNull(foundTeacher);
         assertEquals(teacherId, foundTeacher.getId());
         assertEquals("John", foundTeacher.getFirstName());
@@ -79,13 +79,14 @@ class TeacherServiceTest {
     void testFindById_TeacherNotFound() {
         Long teacherId = 1L;
 
-        // Simulation du cas où l'enseignant n'existe pas
+        // Arrange Simulation du cas où l'enseignant n'existe pas
         when(teacherRepository.findById(teacherId)).thenReturn(Optional.empty());
 
-        // Appel de la méthode findById
+        // Act Appel de la méthode findById
         Teacher foundTeacher = teacherService.findById(teacherId);
 
-        // Vérification que la méthode renvoie null lorsque l'enseignant n'est pas
+        // Assert Vérification que la méthode renvoie null lorsque l'enseignant n'est
+        // pas
         // trouvé
         assertNull(foundTeacher);
 

@@ -14,7 +14,7 @@ describe('UserService', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule], // Utilisation de HttpClientTestingModule pour simuler les requêtes HTTP
+      imports: [HttpClientTestingModule],
       providers: [UserService],
     });
     service = TestBed.inject(UserService);
@@ -22,7 +22,7 @@ describe('UserService', () => {
   });
 
   afterEach(() => {
-    httpMock.verify(); // Vérifie qu'aucune requête non traitée ne reste
+    httpMock.verify();
   });
 
   it('should be created', () => {
@@ -47,16 +47,16 @@ describe('UserService', () => {
 
     const req = httpMock.expectOne('api/user/1');
     expect(req.request.method).toBe('GET');
-    req.flush(mockUser); // Simule la réponse de l'API
+    req.flush(mockUser);
   });
 
   it('should delete a user by id', () => {
     service.delete('1').subscribe((response) => {
-      expect(response).toBeNull(); // Vérification que la suppression renvoie null
+      expect(response).toBeNull();
     });
 
     const req = httpMock.expectOne('api/user/1');
     expect(req.request.method).toBe('DELETE');
-    req.flush(null); // Simule une réponse vide pour la suppression
+    req.flush(null);
   });
 });

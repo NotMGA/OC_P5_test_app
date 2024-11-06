@@ -16,7 +16,6 @@ describe('SessionService', () => {
   });
 
   it('should log out a user and clear session information', () => {
-    // On log d'abord un utilisateur pour simuler une session active
     const mockSessionInformation: SessionInformation = {
       token: 'abcd1234',
       type: 'Bearer',
@@ -37,13 +36,11 @@ describe('SessionService', () => {
   });
 
   it('should emit the correct value for $isLogged observable', (done) => {
-    // Souscription à l'observable $isLogged pour vérifier les valeurs émises
     service.$isLogged().subscribe((isLogged) => {
       expect(isLogged).toBe(true);
       done();
     });
 
-    // Connexion d'un utilisateur pour activer l'état "isLogged"
     const mockSessionInformation: SessionInformation = {
       token: 'abcd1234',
       type: 'Bearer',

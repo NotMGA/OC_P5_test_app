@@ -1,10 +1,9 @@
 package com.openclassrooms.starterjwt.payload.response;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
+
 public class JwtResponse {
   private String token;
   private String type = "Bearer";
@@ -15,7 +14,7 @@ public class JwtResponse {
 
   private Boolean admin;
 
-  public JwtResponse(String accessToken, Long id, String username,String firstName, String lastName, Boolean admin) {
+  public JwtResponse(String accessToken, Long id, String username, String firstName, String lastName, Boolean admin) {
     this.token = accessToken;
     this.id = id;
     this.firstName = firstName;
